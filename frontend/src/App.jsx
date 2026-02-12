@@ -1,6 +1,13 @@
 import { useState, useEffect, useRef } from "react";
-const API_URL = "http://localhost:3000"; 
-const WS_URL = "ws://localhost:3000";
+const BASE_DOMAIN = "gochat-app-production.up.railway.app"; // Ganti link Railway kamu nanti
+
+// Kalau masih di localhost, pakai ini:
+// const API_URL = "http://localhost:3000";
+// const WS_URL = "ws://localhost:3000";
+
+// Kalau sudah DEPLOY (Railway), pakai ini:
+const API_URL = `https://${BASE_DOMAIN}`;  // Pakai HTTPS
+const WS_URL = `wss://${BASE_DOMAIN}`;
 // ==========================================
 // 1. KOMPONEN UI KECIL
 // ==========================================
