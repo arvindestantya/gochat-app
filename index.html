@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>GoChat Tester</title>
+</head>
+<body>
+    <h2>💬 GoChat Test (Echo)</h2>
+    <div id="status" style="color: red; font-weight: bold;">Disconnected</div>
+    <hr/>
+    <input type="text" id="msgInput" placeholder="Ketik pesan..." />
+    <button onclick="kirimPesan()">Kirim</button>
+    
+    <h3>Log Pesan:</h3>
+    <pre id="output" style="background: #f0f0f0; padding: 10px; min-height: 200px; border: 1px solid #ccc;"></pre>
+
+    <script>
+        // Konek ke Server Go di port 8080
+        const ws = new WebSocket("ws://localhost:8080/ws");
+
+        ws.onopen = function() {
+            document.getElementById("status").innerText = "Connected ✅";
+            document.getElementById("status").style.color = "green";
+        };
+
+        ws.onmessage = function(event) {
+            // Saat server membalas pesan kita
+            document.getElementById("output").innerText += "Server: " + event.data + "\n";
+        };
+
+        ws.onclose = function() {
+            document.getElementById("status").innerText = "Disconnected ❌";
+            document.getElementById("status").style.color = "red";
+        };
+
+        ws.onerror = function(error) {
+            console.error("WebSocket Error:", error);
+        };
+
+        function kirimPesan() {
+            const input = document.getElementById("msgInput");
+            if (input.value) {
+                ws.send(input.value); // Kirim ke server
+                // Tampilkan apa yang kita kirim di log juga
+                document.getElementById("output").innerText += "Saya: " + input.value + "\n";
+                input.value = "";
+            }
+        }
+    </script>
+</body>
+</html>
