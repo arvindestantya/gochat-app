@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"gorm.io/driver/sqlite"
+	"github.com/glebarez/sqlite" // <--- GANTI JADI INI
 	"gorm.io/gorm"
 )
 
